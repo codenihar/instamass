@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MassCoders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+
+        form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input[type="text"], form input[type="email"], form textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        form input[type="submit"] {
+            display: block;
+            background-color: #1dcaff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #13b0ff;
+        }
+    </style>
+</head>
+<body>
+    <form id="contactForm" action="/submit_contact_form" method="post">
+        <label for="name">Atha or Mama?</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="message">Tea or Perugu?</label><br>
+        <input type="text" id="message" name="message"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Retrieve form values
+            var name = document.getElementById('name').value;
+            var message = document.getElementById('message').value;
+
+            // Construct alert message
+            var alertMessage = name + " mee " + message +" ready!";
+
+            // Display alert with the entered data
+            alert(alertMessage);
+
+            // Optionally, you can submit the form to the server
+            // this.submit();
+        });
+    </script>
+</body>
+</html>
