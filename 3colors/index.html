@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color Matching Game</title>
+    <style>
+        #colorDisplay {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="colorDisplay"></div>
+    <button onclick="newColor()">New Color</button><br/>
+    <input type="text" id="colorGuess" placeholder="Guess the color">
+    <button onclick="checkGuess()">Check Guess</button>
+    <p id="result"></p>
+
+    <script>
+        var colors = ["red", "blue", "green", "yellow", "pink", "purple", "orange", "brown"];
+        var pickedColor;
+
+        function newColor() {
+            pickedColor = colors[Math.floor(Math.random() * colors.length)];
+            document.getElementById("colorDisplay").style.backgroundColor = pickedColor;
+            document.getElementById("colorGuess").value = "";
+            document.getElementById("result").textContent = "";
+        }
+
+        function checkGuess() {
+            var userGuess = document.getElementById("colorGuess").value;
+            if(userGuess.toLowerCase() === pickedColor) {
+                document.getElementById("result").textContent = "Correct!";
+            } else {
+                document.getElementById("result").textContent = "Try again.";
+            }
+        }
+
+        newColor();
+    </script>
+</body>
+</html>
