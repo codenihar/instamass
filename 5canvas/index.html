@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MassCoders</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="300" height="300" style="border:2px solid black;"></canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        var x = 250; // Ball's initial x-coordinate
+        var y = 100; // Ball's initial y-coordinate
+        var dx = 2; // Change in x-coordinate (speed)
+        var dy = 2; // Change in y-coordinate (speed)
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, Math.PI * 2); // Draw the ball
+            ctx.fillStyle = "green";
+            ctx.fill();
+
+            // Update ball position
+            x += dx*10;
+            y += dy;
+
+            // Check for collisions and change direction
+            if (x + dx > canvas.width || x + dx < 0) {
+                dx = -dx;
+            }
+            if (y + dy > canvas.height || y + dy < 0) {
+                dy = -dy;
+            }
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>
