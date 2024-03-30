@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memory Card Game</title>
+    <style>
+        .card {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            display: inline-block;
+            margin: 10px;
+            perspective: 1000px;
+        }
+        .cardInner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .cardFront, .cardBack {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+        .cardBack {
+            background-color: #f00;
+            transform: rotateY(180deg);
+        }
+        .cardFlipped .cardInner {
+            transform: rotateY(180deg);
+        }
+        .shake {
+            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+        @keyframes shake {
+            10%, 90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+            20%, 80% {
+                transform: translate3d(2px, 0, 0);
+            }
+            30%, 50%, 70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+            40%, 60% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="game-board"></div>
+
+    <script>
+        var colors = ['red', 'blue', 'green', 'yellow', 'red', 'blue', 'green', 'yellow'];
+        var cards = [];
+        var lastColor = '';
+        var score = 0;
+
+        // Shuffle colors array
+        colors.sort(() => Math.random() - 0.5);
+
+        // Create cards
+        for (var i = 0; i < colors.length; i++) {
+            var card = document.createElement('div');
+            card.className = 'card';
+            card.dataset.color = colors[i];
+            card.addEventListener('click', onCardClicked);
+            cards.push(card);
+        }
+
+        // Add cards to game board
+        var gameBoard = document.getElementById('game-board');
+        for (var i = 0; i < cards.length; i++) {
+            gameBoard.appendChild(cards[i]);
+        }
+
+        // Reveal all cards for 5 seconds
+        for (var i = 0; i < cards.length; i++) {
+            cards[i].style.backgroundColor = cards[i].dataset.color;
+        }
+        setTimeout(function() {
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].style.backgroundColor = '#ccc';
+            }
+        }, 5000);
+
+        function onCardClicked(e) {
+            var target = e.target;
+            target.style.backgroundColor = target.dataset.color;
+
+            if (lastColor === '') {
+                lastColor = target.dataset.color;
+            } else if (lastColor === target.dataset.color) {
+                score++;
+                lastColor = '';
+                target.classList.add('matched');
+            } else {
+                lastColor = '';
+                setTimeout(function() {
+                    target.style.backgroundColor = '#ccc';
+                }, 500);
+            }
+
+            if (score === colors.length / 2) {
+                alert('You won!');
+            }
+        }
+    </script>
+</body>
+</html>
